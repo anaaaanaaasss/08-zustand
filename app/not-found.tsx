@@ -1,11 +1,17 @@
-export const metadata = {
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
   title: '404 Not Found | NoteHub',
   description: 'Oops! This page does not exist.',
   openGraph: {
     title: '404 Not Found | NoteHub',
     description: 'Oops! This page does not exist.',
     url: 'https://08-zustand-pi-three.vercel.app/not-found',
-    images: ['https://ac.goit.global/fullstack/react/notehub-og-meta.jpg'],
+    images: [
+      {
+        url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
+      },
+    ],
   },
 };
 

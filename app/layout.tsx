@@ -30,7 +30,11 @@ export const metadata: Metadata = {
     title: 'NoteHub | The Ultimate Note-Taking App',
     description: 'Organize your thoughts, tasks, and ideas efficiently with NoteHub — your personal note manager.',
     url: 'https://08-zustand-pi-three.vercel.app',
-    images: ['https://ac.goit.global/fullstack/react/notehub-og-meta.jpg'],
+    images: [
+      {
+        url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
+      },
+    ],
   },
 };
 
@@ -42,8 +46,8 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={roboto.variable}>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en">
+      <body className={`${roboto.variable} ${geistSans.variable} ${geistMono.variable}`}>
         <TanStackProvider>
           <Header />
           <main>
