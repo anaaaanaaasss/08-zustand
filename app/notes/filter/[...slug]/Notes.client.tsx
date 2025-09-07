@@ -1,25 +1,25 @@
 'use client';
 
-import Modal from '@/components/Modal/Modal';
-import NoteForm from '@/components/NoteForm/NoteForm';
 import NoteList from '@/components/NoteList/NoteList';
 import Pagination from '@/components/Pagination/Pagination';
 import SearchBox from '@/components/SearchBox/SearchBox';
-import { fetchNotes, Tags } from '@/lib/api';
+import { fetchNotes } from '@/lib/api';
+import type { Tags } from '@/lib/api';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { useDebounce, useDebouncedCallback } from 'use-debounce';
 import css from './NotesClient.module.css';
 
 interface NotesClientProps {
-  category: Exclude<Tags[number], 'All'> | undefined;
+  category: Exclude<Tags, 'All'> | undefined;
 }
 
 const NotesClient = ({ category }: NotesClientProps) => {
+  const normalizedCategory = category as Exclude<Tags, 'All'>;
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery] = useDebounce(query, 300);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const {
     data: notes,
@@ -27,8 +27,8 @@ const NotesClient = ({ category }: NotesClientProps) => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['notes', { search: debouncedQuery, page, category }],
-    queryFn: () => fetchNotes(debouncedQuery, page, undefined, category),
+    queryKey: ['notes', { search: debouncedQuery, page, category: normalizedCategory }],
+    queryFn: () => fetchNotes(debouncedQuery, page, undefined, normalizedCategory),
     refetchOnMount: false,
     placeholderData: keepPreviousData,
   });
@@ -46,10 +46,6 @@ const NotesClient = ({ category }: NotesClientProps) => {
   if (error || !notes)
     return <p>Could not fetch the list of notes. {error?.message}</p>;
 
-  const handleClose = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <div className={css.app}>
       <Toaster />
@@ -58,21 +54,12 @@ const NotesClient = ({ category }: NotesClientProps) => {
         {totalPages > 1 && (
           <Pagination totalPages={totalPages} page={page} setPage={setPage} />
         )}
-        <button className={css.button} onClick={() => setIsModalOpen(true)}>
+        <Link href="/notes/action/create" className={css.button}>
           Create note +
-        </button>
+        </Link>
       </header>
       {isSuccess && notes && (
         <NoteList notes={notes.notes} query={query} page={page} />
-      )}
-      {isModalOpen && (
-        <Modal onClose={handleClose}>
-          <NoteForm
-            onSubmit={handleClose}
-            onCancel={handleClose}
-            categories={['All', 'Todo', 'Work', 'Personal', 'Meeting', 'Shopping'] as Tags}
-          />
-        </Modal>
       )}
     </div>
   );

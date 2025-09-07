@@ -8,3 +8,4 @@ export interface Note {
 }
 
 export type NoteId = Note["id"];
+

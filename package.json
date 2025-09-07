@@ -1,5 +1,5 @@
 {
-  "name": "07-notehub-nextjs",
+  "name": "08-zustand",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,10 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.85.9",
+    "@tanstack/react-query": "^5.87.1",
     "@tanstack/react-query-devtools": "^5.85.9",
     "axios": "^1.11.0",
-    "axois": "^0.0.1-security",
     "clsx": "^2.1.1",
     "formik": "^2.4.6",
     "framer-motion": "^12.23.12",
@@ -24,7 +23,8 @@
     "react-hot-toast": "^2.6.0",
     "react-paginate": "^8.3.0",
     "use-debounce": "^10.0.6",
-    "yup": "^1.7.0"
+    "yup": "^1.7.0",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

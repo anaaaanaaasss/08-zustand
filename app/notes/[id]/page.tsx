@@ -10,6 +10,22 @@ interface NoteDetailsProps {
   params: Promise<{ id: string }>;
 }
 
+export async function generateMetadata({ params }: NoteDetailsProps) {
+  const { id } = await params;
+  const note = await fetchNoteById(id);
+
+  return {
+    title: `${note.title} | NoteHub`,
+    description: note.content.slice(0, 100),
+    openGraph: {
+      title: `${note.title} | NoteHub`,
+      description: note.content.slice(0, 100),
+      url: `https://your-vercel-app-url/notes/${id}`,
+      images: ['https://ac.goit.global/fullstack/react/notehub-og-meta.jpg'],
+    },
+  };
+}
+
 const NoteDetails = async ({ params }: NoteDetailsProps) => {
   const { id } = await params;
   const queryClient = new QueryClient();

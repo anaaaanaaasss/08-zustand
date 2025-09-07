@@ -2,12 +2,11 @@
 
 import { Routes } from '@/lib/routes';
 import css from './TagsMenu.module.css';
-import { Tags } from '@/lib/api';
 import Link from 'next/link';
 import { useState } from 'react';
 
 interface TagsMenuProps {
-  categories: Tags;
+  categories: ('All' | 'Todo' | 'Work' | 'Personal' | 'Meeting' | 'Shopping')[];
 }
 
 const TagsMenu = ({ categories }: TagsMenuProps) => {

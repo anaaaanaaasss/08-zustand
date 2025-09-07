@@ -4,9 +4,9 @@ import type { Note, NoteId } from "@/types/note";
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
 axios.defaults.headers.common["Authorization"] = `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`;
 
-const Tags = ["All", "Todo", "Work", "Personal", "Meeting", "Shopping"] as const
+export const Tags = ["All", "Todo", "Work", "Personal", "Meeting", "Shopping"] as const
 
-export type Tags = typeof Tags
+export type Tags = typeof Tags[number]
 
 type SortBy = "created" | "updated"
 
@@ -19,7 +19,7 @@ export const fetchNotes = async (
 	search?: string,
 	page: number = 1,
 	perPage: number = 12,
-	tag?: Exclude<Tags[number], "All">,
+	tag?: Exclude<Tags, "All">,
 	sortBy?: SortBy
 ) => {
 	const { data } = await axios.get<FetchNotes>("notes", {
@@ -57,4 +57,4 @@ export const deleteNote = async (noteId: NoteId) => {
 	return data
 }
 
-export const getCategories = Tags
+export const getCategories = () => Tags.slice(1).filter(tag => tag !== 'All');
