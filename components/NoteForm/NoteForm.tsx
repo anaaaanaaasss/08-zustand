@@ -8,8 +8,8 @@ import toast from 'react-hot-toast';
 import { useNoteStore } from '@/lib/store/noteStore';
 
 interface NoteFormProps {
-  categories: ("Todo" | "Work" | "Personal" | "Meeting" | "Shopping")[];
-  onSubmit: () => void;
+  categories: ("All" | "Todo" | "Work" | "Personal" | "Meeting" | "Shopping")[];
+  onSubmit: (data: { title: string; content: string; tag: string }) => void;
   onCancel: () => void;
 }
 
@@ -31,7 +31,7 @@ export default function NoteForm({
       toast.success('Note has been successfully created!');
       queryClient.invalidateQueries({ queryKey: ['notes'] });
       clearDraft();
-      onSubmit();
+      onSubmit(draft);
     },
     onError: () => {
       Loading.remove();

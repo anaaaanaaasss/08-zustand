@@ -59,7 +59,7 @@ const NotesClient = ({ category }: NotesClientProps) => {
         </Link>
       </header>
       {isSuccess && notes && (
-        <NoteList notes={notes.notes} query={query} page={page} />
+        <NoteList notes={notes.notes} />
       )}
     </div>
   );

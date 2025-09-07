@@ -10,8 +10,6 @@ import Link from 'next/link';
 import { Routes } from '@/lib/routes';
 
 interface NoteListProps {
-  query: string;
-  page: number;
   notes: Note[];
   isFetching?: boolean;
 }
@@ -43,14 +41,14 @@ const itemVariants: Variants = {
   },
 };
 
-export default function NoteList({ notes, query, page }: NoteListProps) {
+export default function NoteList({ notes }: NoteListProps) {
   const queryClient = useQueryClient();
 
   const noteDeletion = useMutation({
     mutationFn: async (id: string) => await deleteNote(id),
     onSuccess: () => {
       toast.success('Note has been successfully deleted!');
-      queryClient.invalidateQueries({ queryKey: ['notes', query, page] });
+      queryClient.invalidateQueries({ queryKey: ['notes'] });
     },
     onError: () => {
       toast.error('Error occurred while deleting note!');

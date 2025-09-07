@@ -3,13 +3,13 @@
 import NoteForm from '@/components/NoteForm/NoteForm';
 import { useRouter } from 'next/navigation';
 
-const categories = ['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'] as const;
-
+const categories = ['All', 'Todo', 'Work', 'Personal', 'Meeting', 'Shopping'] as const;
 export default function NoteFormPage() {
   const router = useRouter();
 
-  const handleSubmit = () => {
-    console.log('Submitting note');
+  const handleSubmit = (data: { title: string; content: string; tag: string }) => {
+    console.log('Submitting note', data);
+    router.push('/notes/filter/All');
   };
 
   const handleCancel = () => {
