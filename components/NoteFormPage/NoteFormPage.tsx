@@ -9,7 +9,7 @@ export default function NoteFormPage() {
 
   const handleSubmit = (data: { title: string; content: string; tag: string }) => {
     console.log('Submitting note', data);
-    router.push('/notes/filter/All');
+    router.push('/notes');
   };
 
   const handleCancel = () => {
@@ -18,7 +18,7 @@ export default function NoteFormPage() {
 
   return (
     <NoteForm
-      categories={[...categories]}
+      categories={categories.filter((tag) => tag !== 'All')}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
     />

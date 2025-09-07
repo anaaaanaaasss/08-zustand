@@ -6,6 +6,7 @@ import { createNote } from '@/lib/api';
 import { Loading } from 'notiflix';
 import toast from 'react-hot-toast';
 import { useNoteStore } from '@/lib/store/noteStore';
+import { useRouter } from 'next/navigation';
 
 interface NoteFormProps {
   categories: ("All" | "Todo" | "Work" | "Personal" | "Meeting" | "Shopping")[];
@@ -18,6 +19,7 @@ export default function NoteForm({
   onSubmit,
   onCancel,
 }: NoteFormProps) {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { draft, setDraft, clearDraft } = useNoteStore();
 
@@ -26,12 +28,13 @@ export default function NoteForm({
       const data = await createNote(title, content, tag);
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       Loading.remove();
       toast.success('Note has been successfully created!');
       queryClient.invalidateQueries({ queryKey: ['notes'] });
+      onSubmit(variables); // передаем корректные данные, а не очищенный черновик
       clearDraft();
-      onSubmit(draft);
+      router.push('/notes');
     },
     onError: () => {
       Loading.remove();
@@ -84,11 +87,13 @@ export default function NoteForm({
           value={draft.tag}
           onChange={handleChange}
         >
-          {categories.map((tag) => (
-            <option key={tag} value={tag}>
-              {tag}
-            </option>
-          ))}
+          {categories
+            .filter((tag) => tag !== 'All')
+            .map((tag) => (
+              <option key={tag} value={tag}>
+                {tag}
+              </option>
+            ))}
         </select>
       </div>
 

@@ -15,7 +15,7 @@ const Header = async () => {
       <nav aria-label="Main Navigation">
         <ul className={css.navigation}>
           <li>
-            <Link href={Routes.Home}>Home</Link>
+            <Link href={Routes.Notes}>Home</Link>
           </li>
           <li>
             <TagsMenu categories={categories} />
