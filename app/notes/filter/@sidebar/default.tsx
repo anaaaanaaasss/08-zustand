@@ -5,11 +5,12 @@ import { Routes } from '@/lib/routes';
 
 const SidebarNotes = async () => {
   const categories = await getCategories();
+  const allCategories = ['All', ...categories];
 
   return (
     <ul className={css.menuList}>
-      {Array.isArray(categories) &&
-        categories.map((category) => (
+      {Array.isArray(allCategories) &&
+        allCategories.map((category) => (
           <li key={category} className={css.menuItem}>
             <Link
               href={`${Routes.NotesFilter}/${category}`}

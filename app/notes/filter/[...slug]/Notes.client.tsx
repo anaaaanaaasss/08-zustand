@@ -13,11 +13,11 @@ import { useDebounce, useDebouncedCallback } from 'use-debounce';
 import css from './NotesClient.module.css';
 
 interface NotesClientProps {
-  category: Exclude<Tags, 'All'> | undefined;
+  category: Tags | undefined;
 }
 
 const NotesClient = ({ category }: NotesClientProps) => {
-  const normalizedCategory = category as Exclude<Tags, 'All'>;
+  const normalizedCategory = category === 'All' ? undefined : category;
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery] = useDebounce(query, 300);
   const [page, setPage] = useState<number>(1);
